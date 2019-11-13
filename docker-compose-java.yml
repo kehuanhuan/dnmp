@@ -48,6 +48,7 @@ services:
       - default
     environment:
       MYSQL_DATABASE: "${MYSQL5_DATABASE}"
+      MYSQL_USER: "${MYSQL5_USER}"
       MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
       TZ: "$TZ"
 
