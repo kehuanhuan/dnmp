@@ -24,7 +24,7 @@ RUN chmod +x install.sh && sh install.sh && rm -rf /tmp/extensions
 
 
 RUN apk --no-cache add tzdata \
-    && cp "/usr/share/zoneinfo/$TZ" /etc/localtime \
+    && cp "/usr/share/zoneinfo/${TZ}" /etc/localtime \
     && echo "$TZ" > /etc/timezone
 
 

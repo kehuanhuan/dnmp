@@ -18,7 +18,7 @@ services:
       - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf:ro
       - ${NGINX_LOG_DIR}:/var/log/nginx/:rw
     environment:
-      TZ: "$TZ"
+      TZ: "${TZ}"
     restart: always
     networks:
       - default
@@ -30,8 +30,12 @@ services:
         PHP_VERSION: php:${PHP_VERSION}-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
         PHP_EXTENSIONS: ${PHP_EXTENSIONS}
-        TZ: "$TZ"
+        TZ: "${TZ}"
     container_name: php
+    environment:
+      TZ: "${TZ}"
+    ports:
+      - "9092:9092"
     expose:
       - 9501
     volumes:
@@ -58,7 +62,21 @@ services:
       - default
     environment:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      TZ: "$TZ"
+      TZ: "${TZ}"
+
+  redis:
+    image: redis:${REDIS_VERSION}
+    container_name: redis
+    ports:
+      - "${REDIS_HOST_PORT}:6379"
+    volumes:
+      - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
+    restart: always
+    entrypoint: ["redis-server", "/etc/redis.conf"]
+    environment:
+      TZ: "${TZ}"
+    networks:
+      - default
 
 networks:
   default:
