@@ -273,6 +273,18 @@ services:
       - "${LOGSTASH_HOST_PORT_C}:9600"
       - "${LOGSTASH_HOST_PORT_S}:5044"
 
+  filebeat:
+    container_name: filebeat
+    image: store/elastic/filebeat:7.1.1
+    command: --strict.perms=false
+    networks:
+      - custom
+    volumes:
+      - ${FILEBEAT_YML}:/usr/share/filebeat/filebeat.yml
+      - /var/log/laravel/:/var/log/laravel/
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+
 volumes:
   esdata:
     driver: local
