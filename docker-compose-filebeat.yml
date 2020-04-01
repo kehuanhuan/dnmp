@@ -1,0 +1,18 @@
+version: "3"
+services:
+
+  filebeat:
+    container_name: filebeat
+    image: store/elastic/filebeat:7.1.1
+    command: --strict.perms=false
+    volumes:
+     - ${FILEBEAT_YML}:/usr/share/filebeat/filebeat.yml
+     - ${SOURCE_DIR}/runtime/log/202004/:/var/log/laravel/
+    tty: true
+
+volumes:
+  esdata:
+    driver: local
+
+networks:
+  default:
