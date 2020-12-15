@@ -14,7 +14,7 @@ services:
     volumes:
       - ${SOURCE_DIR}:/www/:rw
       - ${NGINX_SSL_CERTIFICATE_DIR}:/ssl:rw
-      - ${NGINX_CONFD_DIR}:/etc/nginx/conf.d/:rw
+      - ${NGINX_CONF_LARAVEL_DIR}:/etc/nginx/conf.d/:rw
       - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf:ro
       - ${NGINX_LOG_DIR}:/var/log/nginx/:rw
     environment:
@@ -30,8 +30,6 @@ services:
         PHP_EXTENSIONS: ${PHP_EXTENSIONS}
         TZ: "$TZ"
     container_name: php
-    expose:
-      - 9501
     volumes:
       - ${SOURCE_DIR}:/www/:rw
       - ${PHP_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
@@ -41,20 +39,20 @@ services:
     cap_add:
       - SYS_PTRACE
 
-  # mysql:
-  #   image: mysql:${MYSQL_VERSION}
-  #   container_name: mysql
-  #   ports:
-  #     - "${MYSQL_HOST_PORT}:3306"
-  #   volumes:
-  #     - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
-  #     - ${MYSQL_DATA_DIR}:/var/lib/mysql/:rw
-  #   restart: always
-  #   networks:
-  #     - default
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-  #     TZ: "$TZ"
+  mysql:
+    image: mysql:${MYSQL_VERSION}
+    container_name: mysql
+    ports:
+      - "${MYSQL_HOST_PORT}:3306"
+    volumes:
+      - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql/:rw
+    restart: always
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      TZ: "$TZ"
 
 networks:
   default:
