@@ -2,18 +2,18 @@ version: '3'
 
 services:
   mysql5:
-    image: mysql:${MYSQL5_VERSION}
+    image: mysql:${MYSQL_VERSION}
     container_name: mysql5
     ports:
-      - "${MYSQL5_HOST_PORT}:3306"
+      - "${MYSQL_HOST_PORT}:3306"
     volumes:
-      - ${MYSQL5_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
-      - ${MYSQL5_DATA_DIR}:/var/lib/mysql/:rw
+      - ${MYSQL_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
+      - ${MYSQL_DATA_DIR}:/var/lib/mysql/:rw
     restart: always
     networks:
       - default
     environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       TZ: "$TZ"
 
   redis:
