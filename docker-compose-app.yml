@@ -1,38 +1,46 @@
 version: '3'
 services:
   mall-admin:
-    image: mall/mall-admin:1.0-SNAPSHOT
-    container_name: mall-admin
+    image: java
+    volumes:
+      - ./data/app/mall-admin/logs:/var/logs
+      - /etc/localtime:/etc/localtime
+      - ${SOURCE_DIR}:/var/www/:rw
+    working_dir: /var/www
+    command: java -jar /var/www/litemall-all/target/litemall-all-0.1.0-exec.jar
     ports:
       - 8080:8080
-    volumes:
-      - /mydata/app/mall-admin/logs:/var/logs
-      - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
     external_links:
       - mysql:db #可以用db这个域名访问mysql服务
   mall-search:
-    image: mall/mall-search:1.0-SNAPSHOT
+    image: java
     container_name: mall-search
     ports:
       - 8081:8081
     volumes:
-      - /mydata/app/mall-search/logs:/var/logs
+      - ./data/app/mall-search/logs:/var/logs
       - /etc/localtime:/etc/localtime
+      - ${SOURCE_DIR}:/var/www/:rw
+    working_dir: /var/www
+    command: java -jar /var/www/litemall-all/target/litemall-all-0.1.0-exec.jar
     environment:
       - 'TZ="Asia/Shanghai"'
     external_links:
       - elasticsearch:es #可以用es这个域名访问elasticsearch服务
       - mysql:db #可以用db这个域名访问mysql服务
   mall-portal:
-    image: mall/mall-portal:1.0-SNAPSHOT
+    image: java
     container_name: mall-portal
     ports:
       - 8085:8085
     volumes:
-      - /mydata/app/mall-portal/logs:/var/logs
+      - ./data/app/mall-portal/logs:/var/logs
       - /etc/localtime:/etc/localtime
+      - ${SOURCE_DIR}:/var/www/:rw
+    working_dir: /var/www
+    command: java -jar /var/www/litemall-all/target/litemall-all-0.1.0-exec.jar
     environment:
       - 'TZ="Asia/Shanghai"'
     external_links:
