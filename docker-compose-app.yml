@@ -3,11 +3,11 @@ services:
   mall-admin:
     image: java:8
     volumes:
-      - ./data/app/mall-admin/logs:/var/logs
+      - ./logs/app/mall-admin:/var/logs
       - /etc/localtime:/etc/localtime
       - ${SOURCE_DIR}:/var/www/:rw
     working_dir: /var/www
-    command: java -jar /var/www/litemall-all/target/litemall-all-0.1.0-exec.jar
+    command: java -jar /var/www/mall-admin/target/mall-admin-1.0-SNAPSHOT.jar
     ports:
       - 8080:8080
     environment:
@@ -20,11 +20,11 @@ services:
     ports:
       - 8081:8081
     volumes:
-      - ./data/app/mall-search/logs:/var/logs
+      - ./logs/app/mall-search:/var/logs
       - /etc/localtime:/etc/localtime
       - ${SOURCE_DIR}:/var/www/:rw
     working_dir: /var/www
-    command: java -jar /var/www/litemall-all/target/litemall-all-0.1.0-exec.jar
+    command: java -jar /var/www/mall-search/target/mall-search-1.0-SNAPSHOT.jar
     environment:
       - 'TZ="Asia/Shanghai"'
     external_links:
@@ -36,11 +36,11 @@ services:
     ports:
       - 8085:8085
     volumes:
-      - ./data/app/mall-portal/logs:/var/logs
+      - ./logs/app/mall-portal:/var/logs
       - /etc/localtime:/etc/localtime
       - ${SOURCE_DIR}:/var/www/:rw
     working_dir: /var/www
-    command: java -jar /var/www/litemall-all/target/litemall-all-0.1.0-exec.jar
+    command: java -jar /var/www/mall-portal/target/mall-portal-1.0-SNAPSHOT.jar
     environment:
       - 'TZ="Asia/Shanghai"'
     external_links:
@@ -52,4 +52,4 @@ services:
 networks:
   default:
     external:
-      name: devops_default
+      name: devpos_default
