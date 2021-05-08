@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  mysql5:
+  mysql:
     image: mysql:${MYSQL_VERSION}
-    container_name: mysql5
+    container_name: mysql
     ports:
       - "${MYSQL_HOST_PORT}:3306"
     volumes:
