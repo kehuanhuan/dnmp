@@ -25,8 +25,13 @@ filebeat.inputs:
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - /var/log/laravel/*.log
+    - /var/log/*.log
     #- c:\programdata\elasticsearch\logs\*
+
+  tail_files: true
+
+  fields:
+    source: faya-backend-log
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
   # matching any regular expression from the list.
@@ -81,6 +86,13 @@ setup.template.settings:
   index.number_of_shards: 1
   #index.codec: best_compression
   #_source.enabled: false
+
+# 定义模板的相关信息
+setup.template.name: "faya_log"
+setup.template.pattern: "faya-*"
+setup.template.overwrite: true
+setup.template.enabled: true
+setup.ilm.enabled: false
 
 #================================ General =====================================
 
@@ -147,7 +159,13 @@ setup.kibana:
 #-------------------------- Elasticsearch output ------------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: ["elasticsearch:9200"]
+  hosts: ["47.96.28.38:9200"]
+  index: "faya-%{[fields.source]}-*"
+  indices:
+    - index: "faya-backend-log-%{+yyyy.MM.dd}"
+      when.equals:
+        fields.source: "faya-backend-log"
+
 
   # Protocol - either `http` (default) or `https`.
   #protocol: "https"

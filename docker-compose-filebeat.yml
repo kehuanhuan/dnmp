@@ -3,11 +3,11 @@ services:
 
   filebeat:
     container_name: filebeat
-    image: store/elastic/filebeat:7.1.1
+    image: docker.elastic.co/beats/filebeat:7.12.1
     command: --strict.perms=false
     volumes:
-     - ${FILEBEAT_YML}:/usr/share/filebeat/filebeat.yml
-     - ${SOURCE_DIR}/runtime/log/202004/:/var/log/laravel/
+     - ./services/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+     - ./logs/:/var/log/
     tty: true
 
 volumes:
