@@ -1,0 +1,19 @@
+version: '2.0'
+
+services:
+
+  #mysql8 数据库服务
+  mysql8:
+    image: mysql:8.2.0
+    volumes:
+      - ./mysql_data_8:/var/lib/mysql
+    environment:
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "33060:33060"
+      - "3307:3306"
+
+networks:
+  default:
+
